@@ -4,7 +4,7 @@
 
 # Project Structure
 
-![hug flask server project title logo](https://user-images.githubusercontent.com/41173953/85828995-891be080-b7c4-11ea-9a40-1259fa061356.png)
+![hug flask server project construction img](https://user-images.githubusercontent.com/41173953/85829483-ab622e00-b7c5-11ea-82bf-6031636af112.png)
 
 - Flask template engine : Jinja
 - Flask WSGI toolkit : Werkzeug
