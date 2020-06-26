@@ -6,7 +6,7 @@
 
 ![hug flask server project title logo](https://user-images.githubusercontent.com/41173953/85828995-891be080-b7c4-11ea-9a40-1259fa061356.png)
 
-- flask template engine : Jinja
-- flask WSGI toolkit : Werkzeug
-- external framework : bootstrap
-- external library : jquery
+- Flask template engine : Jinja
+- Flask WSGI toolkit : Werkzeug
+- External framework : Bootstrap
+- External library : jquery
