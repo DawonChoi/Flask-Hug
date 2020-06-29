@@ -10,3 +10,4 @@
 - Flask WSGI toolkit : Werkzeug
 - External framework : Bootstrap
 - External library : jquery
+- Database : Local Database
