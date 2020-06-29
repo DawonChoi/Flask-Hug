@@ -2,6 +2,7 @@ from app import app
 from datetime import datetime
 
 from flask import render_template
+from flask import request, redirect
 
 @app.route("/")
 def index():
@@ -18,6 +19,24 @@ def about():
 @app.template_filter("clean_date")
 def clean_date(dt):
     return dt.strftime("%d %b %Y")
+
+@app.route("/sign-up", methods=["GET","POST"])
+def sign_up():
+    if request.method == "POST":
+
+        req = request.form
+
+        missing = list()
+
+        for key, value in req.items():
+            if value == "":
+                missing.append(key)
+
+        if missing:
+            feedback = f"Missing fields for {', '.join(missing)}"
+            return render_template("public/sign_up.html", feedback=feedback)
+
+    return render_template("public/sign_up.html")
 
 @app.route("/jinja")
 def jinja():
