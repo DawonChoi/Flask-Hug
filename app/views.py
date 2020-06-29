@@ -23,20 +23,58 @@ def clean_date(dt):
 @app.route("/sign-up", methods=["GET","POST"])
 def sign_up():
     if request.method == "POST":
-
         req = request.form
+        password = req["password"]
+        conf_password = req["conf_password"]
 
+        print(password+' '+conf_password)
+        # empty list -> full list has members of number of error
         missing = list()
 
         for key, value in req.items():
             if value == "":
                 missing.append(key)
 
+
         if missing:
             feedback = f"Missing fields for {', '.join(missing)}"
             return render_template("public/sign_up.html", feedback=feedback)
+        elif password != conf_password:
+             feedback = "Password mismatch"
+             return render_template("public/sign_up.html", feedback=feedback)
 
     return render_template("public/sign_up.html")
+
+users = {
+    "mitsuhiko": {
+        "name": "Armin Ronacher",
+        "bio": "Creatof of the Flask framework",
+        "twitter_handle": "@mitsuhiko"
+    },
+    "gvanrossum": {
+        "name": "Guido Van Rossum",
+        "bio": "Creator of the Python programming language",
+        "twitter_handle": "@gvanrossum"
+    },
+    "elonmusk": {
+        "name": "Elon Musk",
+        "bio": "technology entrepreneur, investor, and engineer",
+        "twitter_handle": "@elonmusk"
+    }
+}
+
+@app.route("/profile")
+def profile_page():
+    return render_template("public/profile.html")
+
+@app.route("/profile/<username>")
+def profile(username):
+    user = None
+
+    if username in users:
+        user = users[username]
+
+    return render_template("public/profile.html", username=username, user=user)
 
 @app.route("/jinja")
 def jinja():

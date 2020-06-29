@@ -1,3 +1,5 @@
+{% import "macros/input_macros.html" as im %}
+
 {% extends "public/templates/public_template.html" %}
 
 {% block title %}Sign up{% endblock %}
@@ -10,21 +12,10 @@
       <h1>Sign up</h1>
       <hr>
       <form action="/sign-up" method="POST">
-
-        <div class="form-group">
-          <label>Username</label>
-          <input type="text" class="form-control" id="username" name="username" placeholder="Select a username">
-        </div>
-      
-        <div class="form-group">
-          <label>Email</label>
-          <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email">
-        </div>
-      
-        <div class="form-group">
-          <label>Password</label>
-          <input type="password" class="form-control" id="password" name="password" placeholder="Create a password">
-        </div>
+        {{ im.input(label="Username", id="username", name="username", placeholder="Select a username") }}
+        {{ im.input(label="Email", type="email", id="email", name="email", placeholder="Enter your email") }}
+        {{ im.input(label="Password", id="password", name="password", placeholder="Create a password") }}
+        {{ im.input(label="Confirm Password", id="password", name="conf_password", placeholder="Confirm a password") }}
         <button type="submit" class="btn btn-primary">Sign up</button>
 
         {% if feedback %}
