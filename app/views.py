@@ -58,7 +58,7 @@ def sign_up():
             if value == "":
                 missing.append(key)
 
-
+        # 1. check a empty field 2.checking mismatched case of password confirmation
         if missing:
             feedback = f"Missing fields for {', '.join(missing)}"
             return render_template("public/sign_up.html", feedback=feedback)
