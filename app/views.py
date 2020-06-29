@@ -21,6 +21,11 @@ users = {
         "name": "Elon Musk",
         "bio": "technology entrepreneur, investor, and engineer",
         "twitter_handle": "@elonmusk"
+    },
+    "dawon": {
+        "name": "Dawon Choi",
+        "bio": "CTO, Google LLC",
+        "twitter_handle": "@dawon"
     }
 }
 
@@ -65,6 +70,9 @@ def sign_up():
         elif password != conf_password:
              feedback = "Password mismatch"
              return render_template("public/sign_up.html", feedback=feedback)
+        else:
+            success = "Success!!!"
+            return render_template("public/sign_up.html", success=success)
 
     return render_template("public/sign_up.html")
 
@@ -83,11 +91,6 @@ def json_example():
         return make_response(jsonify({"message": "Request body must be JSON"}), 400)
 
 
-@app.route("/guestbook")
-def guestbook():
-    return render_template("public/guestbook.html")
-
-
 @app.route("/query")
 def query():
     if request.args:
@@ -96,6 +99,11 @@ def query():
         return f"(Query) {serialized}", 200
     else:
         return "No query string received", 200 
+
+
+@app.route("/guestbook")
+def guestbook():
+    return render_template("public/guestbook.html")
 
 
 @app.route("/guestbook/create-entry", methods=["POST"])
