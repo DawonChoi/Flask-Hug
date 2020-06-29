@@ -3,10 +3,31 @@ from datetime import datetime
 
 from flask import render_template
 from flask import request, redirect
+from flask import jsonify, make_response
+
+# hard coding
+users = {
+    "mitsuhiko": {
+        "name": "Armin Ronacher",
+        "bio": "Creatof of the Flask framework",
+        "twitter_handle": "@mitsuhiko"
+    },
+    "gvanrossum": {
+        "name": "Guido Van Rossum",
+        "bio": "Creator of the Python programming language",
+        "twitter_handle": "@gvanrossum"
+    },
+    "elonmusk": {
+        "name": "Elon Musk",
+        "bio": "technology entrepreneur, investor, and engineer",
+        "twitter_handle": "@elonmusk"
+    }
+}
 
 @app.route("/")
 def index():
     return render_template("public/index.html")
+
 
 @app.route("/about")
 def about():
@@ -16,9 +37,11 @@ def about():
     <code>Flask is <em>awesome</em></code>
     """
 
+
 @app.template_filter("clean_date")
 def clean_date(dt):
     return dt.strftime("%d %b %Y")
+
 
 @app.route("/sign-up", methods=["GET","POST"])
 def sign_up():
@@ -45,27 +68,38 @@ def sign_up():
 
     return render_template("public/sign_up.html")
 
-users = {
-    "mitsuhiko": {
-        "name": "Armin Ronacher",
-        "bio": "Creatof of the Flask framework",
-        "twitter_handle": "@mitsuhiko"
-    },
-    "gvanrossum": {
-        "name": "Guido Van Rossum",
-        "bio": "Creator of the Python programming language",
-        "twitter_handle": "@gvanrossum"
-    },
-    "elonmusk": {
-        "name": "Elon Musk",
-        "bio": "technology entrepreneur, investor, and engineer",
-        "twitter_handle": "@elonmusk"
-    }
-}
+
+@app.route("/json", methods=["POST"])
+def json_example():
+    if request.is_json:
+        req = request.get_json()
+        response_body = {
+            "message": "JSON received!",
+            "sender": req.get("name")
+        }
+        res = make_response(jsonify(response_body), 200)
+        return res
+    else:
+        return make_response(jsonify({"message": "Request body must be JSON"}), 400)
+
+
+@app.route("/guestbook")
+def guestbook():
+    return render_template("public/guestbook.html")
+
+
+@app.route("/guestbook/create-entry", methods=["POST"])
+def create_entry():
+    req = request.get_json()
+    print(req)
+    res = make_response(jsonify(req), 200)
+    return res
+
 
 @app.route("/profile")
 def profile_page():
     return render_template("public/profile.html")
+
 
 @app.route("/profile/<username>")
 def profile(username):
@@ -75,6 +109,7 @@ def profile(username):
         user = users[username]
 
     return render_template("public/profile.html", username=username, user=user)
+
 
 @app.route("/jinja")
 def jinja():
