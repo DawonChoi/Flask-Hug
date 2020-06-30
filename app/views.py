@@ -14,6 +14,11 @@ app.config["ALLOWED_IMAGE_EXTENSIONS"] = ["JPEG", "JPG", "PNG", "GIF"]
 app.config['MAX_CONTENT_LENGTH'] = 50 * 1024 * 1024
 app.config["MAX_IMAGE_FILESIZE"] = 0.5 * 1024 * 1024
 
+#configuration audio
+app.config["AUDIO_UPLOADS"] = "C:/flask-Hug/app/static/audio/uploads"
+app.config["ALLOWED_AUDIO_EXTENSIONS"] = ["MP3", "WAV", "WMA", "AIFF", "ALAC"]
+
+
 # hard coding
 users = {
     "dawon": {
@@ -43,6 +48,7 @@ def allowed_image_filesize(filesize):
 
 @app.route("/upload-image", methods=["GET", "POST"])
 def upload_image():
+
     if request.method == "POST":
 
         if request.files:
@@ -65,7 +71,16 @@ def upload_image():
                     print("That file extension is not allowed")
                     return redirect(request.url)
 
-    return render_template("public/upload_image.html")
+    return render_template("public/upload.html")
+
+
+@app.route("/upload-audio", methods=["GET", "POST"])
+def upload_image():
+    return render_template("public/upload.html")
+
+
+
+
 
 
 @app.route("/")
