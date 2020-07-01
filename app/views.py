@@ -10,6 +10,7 @@ from flask import send_file, send_from_directory, safe_join, abort
 from flask import flash
 
 import pymysql
+import pylint
 
 #configuration image
 app.config["IMAGE_UPLOADS"] = "C:/flask-Hug/app/static/img/uploads"
@@ -23,6 +24,17 @@ app.config["ALLOWED_AUDIO_EXTENSIONS"] = ["MP3", "WAV", "WMA", "AIFF", "ALAC"]
 
 #login
 app.config["SECRET_KEY"] = 'n1otDX895NuHB51rv6paUA'
+    
+#database
+def get_db():
+    db = pymysql.connect(host='localhost',
+                        port=3306,
+                        user='root',
+                        passwd='cd101368@',
+                        db='HUG',
+                        charset='utf8')
+    cursor = db.cursor()
+    return db, cursor
 
 # hard coding
 users = {
@@ -92,12 +104,19 @@ def upload_audio():
 def about():
     return "about"
 
+@app.route("/all")
+def all():
+    db, cursor = get_db()
+    sql = """select * from accounts;"""
+    cursor.execute(sql)
+    result = cursor.fetchall()
+    return "all members : " + str(result)
+    
 
 @app.route("/sign-up", methods=["GET","POST"])
 def sign_up():
     if request.method == "POST":
         req = request.form
-
         username = req["username"]
         email = req["email"]
         password = req["password"]
