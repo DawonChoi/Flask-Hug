@@ -113,8 +113,10 @@ def all():
     return "all members : " + str(result)
     
 
-@app.route("/sign-up", methods=["GET","POST"])
+@app.route("/sign-up", methods=["GET", "POST"])
 def sign_up():
+    db, cursor = get_db()
+
     if request.method == "POST":
         req = request.form
         username = req["username"]
@@ -149,6 +151,8 @@ def sign_up():
 
 @app.route("/login", methods=["GET","POST"])
 def login():
+    db, cursor = get_db()
+
     if request.method == "POST":
         req = request.form
         username = req.get("username")
