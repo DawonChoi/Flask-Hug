@@ -9,8 +9,8 @@ from werkzeug.utils import secure_filename
 from flask import send_file, send_from_directory, safe_join, abort
 from flask import flash
 
-import os
 import pymysql
+
 #configuration image
 app.config["IMAGE_UPLOADS"] = "C:/flask-Hug/app/static/img/uploads"
 app.config["ALLOWED_IMAGE_EXTENSIONS"] = ["JPEG", "JPG", "PNG", "GIF"]
